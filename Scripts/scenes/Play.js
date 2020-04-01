@@ -9,13 +9,12 @@ var scenes;
             this._scoreBoard = new managers.ScoreBoard;
             this._numOfEnemy = 0;
             this._bulletNum = 20;
-            this._antiBoom = true;
             this.fire = true;
             this._bulletImg = new Image();
             // initialization
             this._player = new objects.Player;
-            this._level = new objects.Label;
             this._enemies = new Array();
+            this._boss = new objects.Enemy();
             this._background = new objects.Background();
             this._playBackSound = new createjs.PlayPropsConfig();
             this._playerbullets = new Array();
@@ -27,7 +26,6 @@ var scenes;
             this._scoreImage = new objects.Button();
             this._lifeImage = new objects.Button();
             this._eexplosion = new objects.Image();
-            this._count = false;
             this._player = new objects.Player();
             this._pointsUp = new objects.Image();
             this._playerBullet = new objects.Bullet();
@@ -39,13 +37,13 @@ var scenes;
         //initilize 
         Start() {
             this._background = new objects.Background(config.Game.ASSETS.getResult("background"));
-            this._level = new objects.Label("Level : 1", "15px", "Consolas", "#000000", 50, 20, true);
             //Set Number of Enemies
-            this._numOfEnemy = 5;
+            this._numOfEnemy = 2;
             //unlimited background sound
             this._playBackSound = new createjs.PlayPropsConfig().set({ interrupt: createjs.Sound.INTERRUPT_ANY, loop: -1, volume: 0.5 });
             createjs.Sound.play("backAudio", this._playBackSound);
             this._enemies = new Array();
+            this._boss = new objects.Enemy(config.Game.ASSETS.getResult("boss"));
             this._enemybullets = new Array();
             this._bulletImage = new objects.Button(config.Game.ASSETS.getResult("bullet"), 565, 30, true);
             this._scoreImage = new objects.Button(config.Game.ASSETS.getResult("score"), 460, 32, true);
@@ -63,10 +61,8 @@ var scenes;
             this._player.Update();
             this.UpdateBullets();
             this.UpdatePlayerFire();
-            //this.updateBullet();
             this.UpdatePosition();
             this.UpdateWinOrLoseCondition();
-            // this.killAll();
             this._bomb.Update();
             managers.Collision.AABBCheck(this._player, this._bomb);
             if (this._bomb.isColliding) {
@@ -105,8 +101,46 @@ var scenes;
                 config.Game.SCENE_STATE = scenes.State.END;
             }
             if (managers.Collision.count >= this._numOfEnemy || this._numOfEnemy == 0) {
-                config.Game.SCENE_STATE = scenes.State.END;
-                managers.Collision.count = 0;
+                if (this._boss.isActive) {
+                    this.addChild(this._boss);
+                    console.log("my nigga");
+                    // config.Game.SCENE_STATE = scenes.State.END;
+                    this._boss.isActive = false;
+                }
+                this._boss.Update();
+                managers.Collision.AABBCheck(this._player, this._boss);
+                if (this._boss.isColliding) {
+                    createjs.Sound.play("./Assets/audio/playerdied.mp3");
+                    config.Game.SCORE_BOARD.Lives = 0;
+                    console.log("Collided Mister Boss");
+                    this.removeChild(this._boss);
+                }
+                this._playerbullets.forEach((bullet) => {
+                    managers.Collision.AABBCheck(this._boss, bullet, 500, true);
+                    if (bullet.isColliding) {
+                        this._eexplosion = new objects.Image(config.Game.ASSETS.getResult("explosion"), this._boss.x, this._boss.y + 40, true);
+                        this.addChild(this._eexplosion);
+                        setTimeout(() => {
+                            this.removeChild(this._eexplosion);
+                        }, 200);
+                        let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                        console.log(randNum);
+                        if (randNum == 1) {
+                            this._pointsUp = new objects.Image(config.Game.ASSETS.getResult("points"), this._boss.x, this._boss.y + 20, true);
+                            this.addChild(this._pointsUp);
+                            this._pointsUp.setStatus(true);
+                        }
+                        if (managers.Collision.count >= 3) {
+                            this._boss.position = new objects.Vector2(-100, -200);
+                            this._boss.died = true;
+                            this.removeChild(this._boss);
+                            bullet.position = new objects.Vector2(-200, -200);
+                            this.removeChild(bullet);
+                            config.Game.SCENE_STATE = scenes.State.WINNER;
+                        }
+                    }
+                });
+                // managers.Collision.count = 0;
             }
             //if attacked more than 3 times, game over
             if (config.Game.SCORE_BOARD.Lives <= 0) {
@@ -140,7 +174,6 @@ var scenes;
                         }
                         bullet.position = new objects.Vector2(-200, -200);
                         this.removeChild(bullet);
-                        //config.Game.SCENE_STATE = scenes.State.END;
                     }
                 });
                 this._playerbullets.forEach((bullet) => {
@@ -151,9 +184,7 @@ var scenes;
                         setTimeout(() => {
                             this.removeChild(this._eexplosion);
                         }, 200);
-                        // this.ExploreAnimation(enemy.x, enemy.y);
-                        // createjs.Sound.play("./Assets/sounds/crash.wav");
-                        let randNum = Math.floor(Math.random() * (1 - 1 + 1)) + 1;
+                        let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
                         console.log(randNum);
                         if (randNum == 1) {
                             this._pointsUp = new objects.Image(config.Game.ASSETS.getResult("points"), enemy.x, enemy.y + 20, true);
@@ -165,7 +196,6 @@ var scenes;
                         this.removeChild(enemy);
                         bullet.position = new objects.Vector2(-200, -200);
                         this.removeChild(bullet);
-                        //config.Game.SCORE_BOARD.Score += 100
                     }
                 });
             });
@@ -202,10 +232,6 @@ var scenes;
                 }
             }
         }
-        //Test
-        // this._engine.x = this._player.x - 25;
-        // this._engine.y = this._player.y + 20;
-        //end update positon
         // Shot fire until enemies are colliding
         FireGun(enemy, bullArray) {
             if (enemy.canShoot()) {

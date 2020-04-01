@@ -29,6 +29,7 @@ let game1 = (function () {
         { id: "explosion1", src: "./Assets/images/explosion01.png" },
         { id: "explosion2", src: "./Assets/images/explosion2.png" },
         { id: "explosion3", src: "./Assets/images/explosion4.png" },
+        { id: "youWin", src: "./Assets/images/youwin.png" },
 
         //buttons
         { id: "startButton", src: "./Assets/images/start.png" },
@@ -111,11 +112,11 @@ let game1 = (function () {
             case scenes.State.PLAY:
                 currentScene = new scenes.Play();
                 break;
-
-
-
             case scenes.State.END:
                 currentScene = new scenes.End();
+                break;
+            case scenes.State.WINNER:
+                currentScene = new scenes.Winner();
                 break;
 
         }

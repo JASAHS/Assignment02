@@ -12,6 +12,7 @@ var objects;
             this.canFire = true;
             this.maxTime = 0;
             this._live = 2;
+            this._isActive = true;
             this._enemybullets = new Array();
             this._enemies = new Array();
             this.Start();
@@ -27,6 +28,12 @@ var objects;
         set died(status) {
             this._died = status;
         }
+        get isActive() {
+            return this._isActive;
+        }
+        set isActive(status) {
+            this._isActive = status;
+        }
         canShoot() {
             if (!this.isColliding) {
                 if (this.canFire) {
@@ -36,13 +43,6 @@ var objects;
             }
             return false;
         }
-        //         // To start the loop
-        // var mainLoopId = setInterval(function(){
-        //     // Do your update stuff...
-        //     move();
-        // }, 40);
-        // // To stop the loop
-        // clearInterval(mainLoopId);`
         // PRIVATE METHODS
         _checkBounds() {
             if (this.x >= 640 - this.halfWidth) {

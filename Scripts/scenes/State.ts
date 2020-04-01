@@ -5,6 +5,7 @@ module scenes {
         INSTRUCTION,
         PLAY,
         END,
+        WINNER,
         NUM_OF_SCENES
     }
 }
