@@ -10,13 +10,14 @@ let game1 = (function () {
 
     let assetManifast = [
         { id: "placeholder", src: "./Assets/images/placeholder.png" },
-        { id: "background", src: "./Assets/images/background1.gif" },
+        { id: "background", src: "./Assets/images/background2.gif" },
         { id: "enemy", src: "./Assets/images/enemy.png" },
         { id: "boss", src: "./Assets/images/boss.png" },
         { id: "player", src: "./Assets/images/player.png" },
         { id: "pbullet", src: "./Assets/images/pbullet.png" },
         { id: "ebullet", src: "./Assets/images/ebullet.png" },
         { id: "bbullet", src: "./Assets/images/bossbullet.png" },
+        { id: "bullet", src: "./Assets/images/bulleticon.png" },
         { id: "score", src: "./Assets/images/score.png" },
         { id: "life", src: "./Assets/images/lives.png" },
         { id: "healthup", src: "./Assets/images/healthup.png" },
@@ -29,16 +30,14 @@ let game1 = (function () {
         { id: "instructionButton", src: "./Assets/images/instruction.png" },
         { id: "exitButton", src: "./Assets/images/exit.png" },
         { id: "replayButton", src: "./Assets/images/replay.png" },
-        { id: "menuButton", src: "./Assets/images/menu.png" }
+        { id: "menuButton", src: "./Assets/images/menu.png" },
 
         //Sounds
-        //   { id: "playSound", src: "./Assets/sounds/BackSound.mp3" },
-        //     { id: "startSound", src: "./Assets/sounds/BackSound.mp3" },
-        //     { id: "crashSound", src: "./Assets/sounds/crash.wav" },
-        //     { id: "powerup", src: "./Assets/sounds/PowerUp.wav" },
-        //     { id: "crashSoundP", src: "./Assets/sounds/crashPlayer.wav" },
-        //     { id: "break", src: "./Assets/sounds/break.wav" },
-        //     { id: "powerup", src: "./Assets/sounds/powerup.wav" }  
+        { id: "backAudio", src: "./Assets/audio/gamest.wav" },
+        { id: "startAudio", src: "./Assets/audio/playerbullet.wav" },
+        { id: "crashAudio", src: "./Assets/audio/playerdied.mp3" },
+        { id: "crashAudio", src: "./Assets/audio/enemydied.wav" },
+        { id: "breakAudio", src: "./Assets/audio/points.wav" }
 
     ];
 

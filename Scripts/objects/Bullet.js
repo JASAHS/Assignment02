@@ -3,7 +3,7 @@ var objects;
 (function (objects) {
     class Bullet extends objects.GameObject {
         // constructor
-        constructor(imagePath = config.Game.ASSETS.getResult("beam2"), x = 0, y = 0, isCentered = true) {
+        constructor(imagePath = config.Game.ASSETS.getResult("pbullet"), x = 0, y = 0, isCentered = true) {
             super(imagePath, x, y, isCentered);
             // private _fireRate:number=0;
             // private _fireTimer:number=0;

@@ -17,7 +17,7 @@ var managers;
                         config.Game.SCORE_BOARD.Lives -= 1;
                         console.log("Attack " + config.Game.SCORE_BOARD.Lives);
                         object2.isColliding = true;
-                        createjs.Sound.play("./Assets/sounds/crashPlayer.wav");
+                        createjs.Sound.play("./Assets/audio/enemydied.wav");
                     }
                 }
             }
@@ -32,7 +32,7 @@ var managers;
                 if (!object2.isColliding) {
                     config.Game.SCORE_BOARD.Lives -= 1;
                     console.log("Attack BlackHole" + config.Game.SCORE_BOARD.Lives);
-                    createjs.Sound.play("./Assets/sounds/crash.wav");
+                    // createjs.Sound.play("./Assets/sounds/crash.wav");
                     object2.isColliding = true;
                     return true;
                 }

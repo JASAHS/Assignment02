@@ -11,6 +11,7 @@ var scenes;
             this.endLabel = new objects.Label();
             this._background = new objects.Background();
             this._backButton = new objects.Button();
+            this._menuButton = new objects.Button();
             this._scoreBoard = new managers.ScoreBoard;
             // this._ocean = new objects.Ocean();
             this.Start();
@@ -24,7 +25,8 @@ var scenes;
             else {
                 this.endLabel = new objects.Label("GAME OVER", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
             }
-            this._backButton = new objects.Button(config.Game.ASSETS.getResult("returnButton"), 320, 500, true);
+            this._backButton = new objects.Button(config.Game.ASSETS.getResult("replayButton"), 260, 500, true);
+            this._menuButton = new objects.Button(config.Game.ASSETS.getResult("menuButton"), 400, 500, true);
             managers.Collision._checkHighScore;
             this._scoreBoard = new managers.ScoreBoard();
             this._scoreBoard.HighScore = config.Game.HIGH_SCORE;
@@ -38,12 +40,22 @@ var scenes;
             this.addChild(this._background);
             this.addChild(this.endLabel);
             this.addChild(this._backButton);
+            this.addChild(this._menuButton);
             this._backButton.on("click", function () {
                 config.Game.SCORE_BOARD.Lives = 3;
                 managers.Collision.count = 0;
                 config.Game.SCENE_STATE = scenes.State.PLAY;
                 config.Game.SCORE_BOARD.Score = 0;
                 config.Game.ANTIBOOMITEM = 0;
+                //Play.point = 0;
+                createjs.Sound.stop();
+            });
+            this._menuButton.on("click", function () {
+                config.Game.SCORE_BOARD.Lives = 3;
+                managers.Collision.count = 0;
+                config.Game.SCENE_STATE = scenes.State.START;
+                config.Game.SCORE_BOARD.Score = 0;
+                // config.Game.ANTIBOOMITEM = 0;
                 //Play.point = 0;
                 createjs.Sound.stop();
             });
