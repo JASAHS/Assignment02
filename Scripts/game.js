@@ -37,7 +37,7 @@ let game1 = (function () {
         { id: "exitButton", src: "./Assets/images/exit.png" },
         { id: "replayButton", src: "./Assets/images/replay.png" },
         { id: "menuButton", src: "./Assets/images/menu.png" },
-        //Sounds
+        //Audio
         { id: "backAudio", src: "./Assets/audio/gamest.wav" },
         { id: "startAudio", src: "./Assets/audio/playerbullet.wav" },
         { id: "crashAudio", src: "./Assets/audio/playerdied.mp3" },

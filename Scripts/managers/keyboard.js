@@ -5,7 +5,6 @@ var managers;
         // constructors
         constructor() {
             this.fireOnce = true;
-            this.antiBoomOnce = true;
             this.enabled = true;
             document.addEventListener('keydown', this.onKeyDown.bind(this), false);
             document.addEventListener('keyup', this.onKeyUp.bind(this), false);
@@ -44,17 +43,6 @@ var managers;
                         this.fire = false;
                         break;
                     }
-                case config.Keys.B:
-                    if (this.antiBoomOnce) {
-                        this.antiBoom = true;
-                        this.antiBoomOnce = false;
-                        console.debug("debug: anti boom once" + this.antiBoomOnce);
-                        break;
-                    }
-                    else {
-                        this.antiBoom = false;
-                        break;
-                    }
             }
         }
         onKeyUp(event) {
@@ -81,10 +69,6 @@ var managers;
                 case config.Keys.SPACE:
                     this.fireOnce = true;
                     this.fire = false;
-                    break;
-                case config.Keys.B:
-                    this.antiBoomOnce = true;
-                    this.antiBoom = false;
                     break;
             }
         }

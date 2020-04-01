@@ -2,7 +2,6 @@
 var managers;
 (function (managers) {
     class Collision {
-        //static live:number = 100;
         static _checkHighScore() {
             if (config.Game.SCORE > config.Game.HIGH_SCORE) {
                 config.Game.HIGH_SCORE = config.Game.SCORE;
@@ -31,8 +30,6 @@ var managers;
             if (objects.Vector2.sqrDistance(object1.position, object2.position) < (radii * radii)) {
                 if (!object2.isColliding) {
                     config.Game.SCORE_BOARD.Lives -= 1;
-                    console.log("Attack BlackHole" + config.Game.SCORE_BOARD.Lives);
-                    // createjs.Sound.play("./Assets/sounds/crash.wav");
                     object2.isColliding = true;
                     return true;
                 }

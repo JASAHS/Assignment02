@@ -28,12 +28,7 @@ var scenes;
             this.addChild(this._menuButton);
             this.addChild(this._instructLabel);
             this._menuButton.on("click", function () {
-                // config.Game.SCORE_BOARD.Lives = 3;
-                // managers.Collision.count = 0;
                 config.Game.SCENE_STATE = scenes.State.START;
-                // config.Game.SCORE_BOARD.Score = 0;
-                // config.Game.ANTIBOOMITEM = 0;
-                //Play.point = 0;
                 createjs.Sound.stop();
             });
         }

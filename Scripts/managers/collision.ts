@@ -2,7 +2,6 @@ module managers {
     export class Collision {
         static count: number = 0;
         static enemy: objects.Enemy;
-        //static live:number = 100;
 
         public static _checkHighScore() {
             if (config.Game.SCORE > config.Game.HIGH_SCORE) {
@@ -38,8 +37,6 @@ module managers {
             if (objects.Vector2.sqrDistance(object1.position, object2.position) < (radii * radii)) {
                 if (!object2.isColliding) {
                     config.Game.SCORE_BOARD.Lives -= 1;
-                    console.log("Attack BlackHole" + config.Game.SCORE_BOARD.Lives);
-                    // createjs.Sound.play("./Assets/sounds/crash.wav");
                     object2.isColliding = true;
                     return true;
                 }

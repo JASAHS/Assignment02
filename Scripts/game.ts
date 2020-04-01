@@ -40,7 +40,7 @@ let game1 = (function () {
         { id: "menuButton", src: "./Assets/images/menu.png" },
 
 
-        //Sounds
+        //Audio
         { id: "backAudio", src: "./Assets/audio/gamest.wav" },
         { id: "startAudio", src: "./Assets/audio/playerbullet.wav" },
         { id: "crashAudio", src: "./Assets/audio/playerdied.mp3" },

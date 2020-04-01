@@ -57,7 +57,7 @@ module scenes {
         public Start(): void {
             this._background = new objects.Background(config.Game.ASSETS.getResult("background"));
             //Number of Enemies
-            this._enemyNumber = 2;
+            this._enemyNumber = 10;
             //Background sound
             this._playBackSound = new createjs.PlayPropsConfig().set({ interrupt: createjs.Sound.INTERRUPT_ANY, loop: -1, volume: 0.5 });
             createjs.Sound.play("backAudio", this._playBackSound)

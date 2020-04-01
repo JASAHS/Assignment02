@@ -45,16 +45,6 @@ var objects;
             }
             this.position = new objects.Vector2(this.x, this.y);
         }
-        // private _keyboardInput(event: KeyboardEvent) {
-        //     // PRESS LEFT ARROW OR 'A' KEY
-        //     if (event.keyCode == 37 || eve nt.keyCode == 65) {
-        //        this._keyPosition.x -= 5;
-        //     }
-        //     // PRESS RIGHT ARROW OR 'D' KEY
-        //     else if (event.keyCode == 39 || event.keyCode == 68 ) {
-        //         this._keyPosition.x += 5;
-        //     }
-        //  } 
         // PUBLIC METHODS
         Start() {
             this.x = 320;
