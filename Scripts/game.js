@@ -26,6 +26,9 @@ let game1 = (function () {
         { id: "startScreen", src: "./Assets/images/startScreen.png" },
         { id: "instructImage", src: "./Assets/images/instruct.png" },
         { id: "explosion", src: "./Assets/images/explosion.png" },
+        { id: "explosion1", src: "./Assets/images/explosion01.png" },
+        { id: "explosion2", src: "./Assets/images/explosion2.png" },
+        { id: "explosion3", src: "./Assets/images/explosion4.png" },
         //buttons
         { id: "startButton", src: "./Assets/images/start.png" },
         { id: "instructionButton", src: "./Assets/images/instruction.png" },
