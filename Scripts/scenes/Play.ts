@@ -9,7 +9,7 @@ module scenes {
         private _playBackSound: createjs.PlayPropsConfig;
         private _playerbullets: Array<objects.Bullet>;
         private _enemybullets: Array<objects.Bullet>;
-        private _numOfEnemy: Number = 0;
+        private _enemyNumber: Number = 0;
         private _bulletNum = 20;
         private _bulletNumLabel: objects.Label;
         private fire = true;
@@ -34,7 +34,7 @@ module scenes {
             this._playBackSound = new createjs.PlayPropsConfig();
             this._playerbullets = new Array<objects.Bullet>();
             this._enemybullets = new Array<objects.Bullet>();
-            this._numOfEnemy;
+            this._enemyNumber;
             this._bulletNum = 30;
             this._bulletNumLabel = new objects.Label();
             this._bulletImage = new objects.Button();
@@ -51,12 +51,12 @@ module scenes {
 
         // PUBLIC METHODS
 
-        //initilize 
+        //Initialising Objects
         public Start(): void {
             this._background = new objects.Background(config.Game.ASSETS.getResult("background"));
-            //Set Number of Enemies
-            this._numOfEnemy = 2;
-            //unlimited background sound
+            //Number of Enemies
+            this._enemyNumber = 2;
+            //Background sound
             this._playBackSound = new createjs.PlayPropsConfig().set({ interrupt: createjs.Sound.INTERRUPT_ANY, loop: -1, volume: 0.5 });
             createjs.Sound.play("backAudio", this._playBackSound)
             this._enemies = new Array<objects.Enemy>();
@@ -67,9 +67,9 @@ module scenes {
             this._lifeImage = new objects.Button(config.Game.ASSETS.getResult("life"), 30, 30, true);
             this._bulletNumLabel = new objects.Label("bullets:", "23px", "Impact, Charcoal, sans-serif", "#fff", 610, 30, true);
             this._bomb = new objects.Imagess(config.Game.ASSETS.getResult("bomb"))
-            //Add ememies
-            this.AddEnemies(this._numOfEnemy);
-
+            //Adding enemies
+            this.CreateEnemies(this._enemyNumber);
+            //scores and lives stored globally for access
             config.Game.SCORE_BOARD = this._scoreBoard;
             this._scoreBoard.HighScore = config.Game.HIGH_SCORE;
 
@@ -82,18 +82,19 @@ module scenes {
             this.UpdateBullets();
             this.UpdatePlayerFire();
             this.UpdatePosition();
-            this.UpdateWinOrLoseCondition();
+            this.WinOrLoseUpdate();
             this._bomb.Update()
 
+            //checking whether bomb is colliding with the player
             managers.Collision.AABBCheck(this._player, this._bomb);
             if (this._bomb.isColliding) {
                 createjs.Sound.play("./Assets/audio/playerdied.mp3");
                 config.Game.SCORE_BOARD.Lives = 0;
                 console.log("Collided Mister Bomb")
                 this.removeChild(this._bomb);
-
             }
 
+            //checking whether star points is colliding with the player
             if (this._pointsUp.getStatus()) {
                 this._pointsUp.Update()
                 managers.Collision.AABBCheck(this._player, this._pointsUp);
@@ -108,8 +109,9 @@ module scenes {
         }
 
         public Main(): void {
-            // adds background to the stage
+            // adds background
             this.addChild(this._background);
+
             this.addChild(this._bulletImage);
             this.addChild(this._lifeImage);
             this.addChild(this._scoreImage);
@@ -118,15 +120,15 @@ module scenes {
             this.addChild(this._bulletNumLabel);
             this.addChild(this._scoreBoard.LivesLabel);
             this.addChild(this._scoreBoard.ScoreLabel);
-        }//end public Main() method
+        }
 
-        public UpdateWinOrLoseCondition() {
+        public WinOrLoseUpdate() {
             this._bulletNumLabel.text = " : " + this._bulletNum;
             if (this._bulletNum == 0) {
                 config.Game.SCENE_STATE = scenes.State.END;
             }
 
-            if (managers.Collision.count >= this._numOfEnemy || this._numOfEnemy == 0) {
+            if (managers.Collision.count >= this._enemyNumber || this._enemyNumber == 0) {
                 if (this._boss.isActive) {
                     this.addChild(this._boss);
                     console.log("my nigga");
@@ -241,14 +243,14 @@ module scenes {
             });
         }
 
-        public AddEnemies(number: Number): void {
+        public CreateEnemies(number: Number): void {
             let createEnemy = setInterval(() => {
                 if (this._enemies.length < number) {
                     let enemy = new objects.Enemy(config.Game.ASSETS.getResult("enemy"));
                     this._enemies.push(enemy);
                     this.addChild(enemy)
-                    console.log("CREATE")
-                    this.FireGun(enemy, this._enemybullets);
+                    console.log("Creating Enemies")
+                    this.ShootPlayer(enemy, this._enemybullets);
                 }
                 else {
                     clearInterval(createEnemy)
@@ -256,9 +258,9 @@ module scenes {
             }, 1000)
         }
 
-        public BulletSpeed(eBullet: objects.Bullet, eSpeed: number, eMove: number, pick: boolean = false): void {
+        public BulletVelocity(eBullet: objects.Bullet, eSpeed: number, eMove: number, type: boolean = false): void {
             //enemy direction
-            if (pick == true) {
+            if (type == true) {
                 eBullet.y += eSpeed;
                 eBullet.position.y += eMove;
                 if (eBullet.y >= 800) {
@@ -274,8 +276,8 @@ module scenes {
                 }
             }
         }
-        // Shot fire until enemies are colliding
-        public FireGun(enemy: objects.Enemy, bullArray: Array<objects.Bullet>): void {
+        // Shoot enemies are colliding
+        public ShootPlayer(enemy: objects.Enemy, bullArray: Array<objects.Bullet>): void {
             if (enemy.canShoot()) {
                 let fire = setInterval(() => {
                     if (!enemy.isColliding) {
@@ -291,7 +293,7 @@ module scenes {
 
         public UpdateBullets() {
             this._playerbullets.forEach((bullet) => {
-                this.BulletSpeed(bullet, 8, 8, false);
+                this.BulletVelocity(bullet, 8, 8, false);
             })
             this._enemies.forEach(enemy => {
                 enemy.addEventListener("tick", () => {
@@ -303,7 +305,7 @@ module scenes {
                 });
             })
             this._enemybullets.forEach((bullet) => {
-                this.BulletSpeed(bullet, 8, 8, true);
+                this.BulletVelocity(bullet, 8, 8, true);
             })
 
         }

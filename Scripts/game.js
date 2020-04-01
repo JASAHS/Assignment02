@@ -30,6 +30,7 @@ let game1 = (function () {
         { id: "explosion2", src: "./Assets/images/explosion2.png" },
         { id: "explosion3", src: "./Assets/images/explosion4.png" },
         { id: "youWin", src: "./Assets/images/youwin.png" },
+        { id: "youLose", src: "./Assets/images/youLose.png" },
         //buttons
         { id: "startButton", src: "./Assets/images/start.png" },
         { id: "instructionButton", src: "./Assets/images/instruction.png" },

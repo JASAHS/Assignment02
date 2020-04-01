@@ -8,6 +8,7 @@ var scenes;
         constructor() {
             super();
             // initialization
+            this._youLose = new objects.Image;
             this._endLabel = new objects.Label();
             this._scoresLabel = new objects.Label();
             this._background = new objects.Background();
@@ -27,6 +28,7 @@ var scenes;
                 this._endLabel = new objects.Label("GAME OVER", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
                 this._scoresLabel = new objects.Label("YOUR SCORE : ", "50px", "Impact, Charcoal, sans-serif", "#ffffff", 290, 400, true);
             }
+            this._youLose = new objects.Image(config.Game.ASSETS.getResult("youLose"), 320, 200);
             this._backButton = new objects.Button(config.Game.ASSETS.getResult("replayButton"), 260, 500, true);
             this._menuButton = new objects.Button(config.Game.ASSETS.getResult("menuButton"), 400, 500, true);
             managers.Collision._checkHighScore;
@@ -43,6 +45,7 @@ var scenes;
             this.addChild(this._endLabel);
             this._scoresLabel.text = "YOUR SCORE : " + config.Game.SCORE_BOARD.Score;
             this.addChild(this._scoresLabel);
+            this.addChild(this._youLose);
             this.addChild(this._backButton);
             this.addChild(this._menuButton);
             this._backButton.on("click", function () {
