@@ -2,9 +2,10 @@ module scenes {
     export class Start extends objects.Scene {
         // PRIVATE INSTANCE MEMBERS
         private _startButton: objects.Button;
+        private _instructionButton: objects.Button;
         private _background: objects.Background;
-        private _firstSceen: objects.Image;
-        private _tutorialButton: objects.Button;
+        private _startScreen: objects.Image;
+        private _instructButton: objects.Button;
 
         // PUBLIC PROPERTIES
 
@@ -13,9 +14,10 @@ module scenes {
             super();
             // initialization
             this._startButton = new objects.Button();
+            this._instructionButton = new objects.Button();
             this._background = new objects.Background();
-            this._firstSceen = new objects.Image();
-            this._tutorialButton = new objects.Button();
+            this._startScreen = new objects.Image();
+            this._instructButton = new objects.Button();
             this.Start();
         }
 
@@ -23,8 +25,9 @@ module scenes {
 
         public Start(): void {
             this._background = new objects.Background(config.Game.ASSETS.getResult("background"));
-            this._startButton = new objects.Button(config.Game.ASSETS.getResult("startButton"), 320, 580, true);
-            // this._tutorialButton = new objects.Button(config.Game.ASSETS.getResult("Tuto"), 550, 700, true);
+            this._startScreen = new objects.Image(config.Game.ASSETS.getResult("startScreen"), 320, 400, true);
+            this._startButton = new objects.Button(config.Game.ASSETS.getResult("startButton"), 260, 580, true);
+            this._instructionButton = new objects.Button(config.Game.ASSETS.getResult("instructionButton"), 400, 580, true);
             // createjs.Sound.play("startSound");
             this.Main();
         }
@@ -35,7 +38,9 @@ module scenes {
 
         public Main(): void {
             this.addChild(this._background);
+            this.addChild(this._startScreen);
             this.addChild(this._startButton);
+            this.addChild(this._instructionButton);
             // this.addChild(this._tutorialButton);
 
             this._startButton.on("click", function () {
@@ -43,11 +48,11 @@ module scenes {
                 config.Game.SCENE_STATE = scenes.State.PLAY;
                 // createjs.Sound.stop();
             });
-            // this._tutorialButton.on("click", function() {
-            //     //changed it for the testing
-            //     config.Game.SCENE_STATE = scenes.State.TUTORIAL;
-            //     createjs.Sound.stop();
-            // });
+            this._instructionButton.on("click", function () {
+                //changed it for the testing
+                config.Game.SCENE_STATE = scenes.State.INSTRUCTION;
+                createjs.Sound.stop();
+            });
         }
 
 

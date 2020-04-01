@@ -2,7 +2,8 @@ module scenes {
     export class End extends objects.Scene {
         // PRIVATE INSTANCE MEMBERS
         private _background: objects.Background;
-        private endLabel: objects.Label;
+        private _endLabel: objects.Label;
+        private _scoresLabel: objects.Label;
         private _backButton: objects.Button;
         private _menuButton: objects.Button;
         private _scoreBoard: managers.ScoreBoard;
@@ -15,7 +16,8 @@ module scenes {
             super();
 
             // initialization
-            this.endLabel = new objects.Label();
+            this._endLabel = new objects.Label();
+            this._scoresLabel = new objects.Label();
             this._background = new objects.Background();
             this._backButton = new objects.Button();
             this._menuButton = new objects.Button();
@@ -30,10 +32,11 @@ module scenes {
         public Start(): void {
             this._background = new objects.Background(config.Game.ASSETS.getResult("background"));
             if (config.Game.STATUS == true) {
-                this.endLabel = new objects.Label("SEE YOU AGAIN", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
+                this._endLabel = new objects.Label("SEE YOU AGAIN", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
             }
             else {
-                this.endLabel = new objects.Label("GAME OVER", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
+                this._endLabel = new objects.Label("GAME OVER", "80px", "Impact, Charcoal, sans-serif", "#ffffff", 320, 300, true);
+                this._scoresLabel = new objects.Label("YOUR SCORE : ", "50px", "Impact, Charcoal, sans-serif", "#ffffff", 290, 400, true);
             }
 
             this._backButton = new objects.Button(config.Game.ASSETS.getResult("replayButton"), 260, 500, true);
@@ -52,7 +55,9 @@ module scenes {
         public Main(): void {
             // this.addChild(this._ocean);
             this.addChild(this._background);
-            this.addChild(this.endLabel);
+            this.addChild(this._endLabel);
+            this._scoresLabel.text = "YOUR SCORE : " + config.Game.SCORE_BOARD.Score;
+            this.addChild(this._scoresLabel);
             this.addChild(this._backButton);
             this.addChild(this._menuButton);
             this._backButton.on("click", function () {

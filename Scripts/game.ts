@@ -23,7 +23,9 @@ let game1 = (function () {
         { id: "healthup", src: "./Assets/images/healthup.png" },
         { id: "bomb", src: "./Assets/images/bomb.png" },
         { id: "points", src: "./Assets/images/points.png" },
-
+        { id: "startScreen", src: "./Assets/images/startScreen.png" },
+        { id: "instructImage", src: "./Assets/images/instruct.png" },
+        { id: "explosion", src: "./Assets/images/explosion.png" },
 
         //buttons
         { id: "startButton", src: "./Assets/images/start.png" },
@@ -31,6 +33,7 @@ let game1 = (function () {
         { id: "exitButton", src: "./Assets/images/exit.png" },
         { id: "replayButton", src: "./Assets/images/replay.png" },
         { id: "menuButton", src: "./Assets/images/menu.png" },
+
 
         //Sounds
         { id: "backAudio", src: "./Assets/audio/gamest.wav" },
@@ -99,9 +102,9 @@ let game1 = (function () {
             case scenes.State.START:
                 currentScene = new scenes.Start();
                 break;
-            // case scenes.State.TUTORIAL:
-            //     currentScene = new scenes.Tutorial();
-            //     break;
+            case scenes.State.INSTRUCTION:
+                currentScene = new scenes.Instruction();
+                break;
             case scenes.State.PLAY:
                 currentScene = new scenes.Play();
                 break;

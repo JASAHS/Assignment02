@@ -34,6 +34,7 @@ var scenes;
             this._bulletImage = new objects.Button();
             this._scoreImage = new objects.Button();
             this._lifeImage = new objects.Button();
+            this._eexplosion = new objects.Image();
             this._count = false;
             this._player = new objects.Player();
             // this._levelup = new objects.Image();
@@ -203,8 +204,12 @@ var scenes;
                 this._enemybullets.forEach((bullet) => {
                     managers.Collision.Check(this._player, bullet);
                     if (bullet.isColliding) {
-                        if (config.Game.SCORE_BOARD.Lives <= 0) {
-                            // this.ExploreAnimation(this._player.x, this._player.y);
+                        this._eexplosion = new objects.Image(config.Game.ASSETS.getResult("explosion"), enemy.x, enemy.y + 40, true);
+                        this.addChild(this._eexplosion);
+                        if (bullet.isColliding) {
+                            setTimeout(() => {
+                                this.removeChild(this._eexplosion);
+                            }, 600);
                         }
                         else {
                             // this.ShieldAnimation(this._player.x, this._player.y);
@@ -217,6 +222,11 @@ var scenes;
                 this._playerbullets.forEach((bullet) => {
                     managers.Collision.AABBCheck(enemy, bullet, 100, true);
                     if (bullet.isColliding) {
+                        this._eexplosion = new objects.Image(config.Game.ASSETS.getResult("explosion"), enemy.x, enemy.y + 40, true);
+                        this.addChild(this._eexplosion);
+                        setTimeout(() => {
+                            this.removeChild(this._eexplosion);
+                        }, 300);
                         // this.ExploreAnimation(enemy.x, enemy.y);
                         // createjs.Sound.play("./Assets/sounds/crash.wav");
                         let randNum = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
