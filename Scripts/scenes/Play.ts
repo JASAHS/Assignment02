@@ -180,7 +180,7 @@ module scenes {
                             this.removeChild(this._eexplosion);
                         }, 200);
 
-                        let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                        let randNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
                         console.log(randNum)
                         if (randNum == 1) {
                             this._pointsUp = new objects.Image(config.Game.ASSETS.getResult("points"), this._boss.x, this._boss.y + 20, true);
@@ -250,7 +250,7 @@ module scenes {
                             this.removeChild(this._eexplosion);
                         }, 200);
 
-                        let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                        let randNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
                         console.log(randNum)
                         if (randNum == 1) {
                             this._pointsUp = new objects.Image(config.Game.ASSETS.getResult("points"), enemy.x, enemy.y + 20, true);
