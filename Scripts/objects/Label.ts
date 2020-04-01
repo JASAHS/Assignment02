@@ -1,7 +1,14 @@
-module objects 
-{
-    export class Label extends createjs.Text
-    {
+/*  
+File Name: Label.ts 
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
+module objects {
+    export class Label extends createjs.Text {
         /**
          * Creates an instance of Label.
          * @param {string} labelString
@@ -14,16 +21,14 @@ module objects
          * @memberof Label
          */
         constructor(
-            labelString:string = "unknown label", 
-            fontSize:string = "20px", 
-            fontFamily:string = "Consolas", 
-            fontColour:string = "#000000", 
-            x:number = 0, y:number = 0, isCentered:boolean = false)
-        {
+            labelString: string = "unknown label",
+            fontSize: string = "20px",
+            fontFamily: string = "Consolas",
+            fontColour: string = "#000000",
+            x: number = 0, y: number = 0, isCentered: boolean = false) {
             super(labelString, fontSize + " " + fontFamily, fontColour);
 
-            if(isCentered)
-            {
+            if (isCentered) {
                 this.regX = this.getBounds().width * 0.5;
                 this.regY = this.getMeasuredLineHeight() * 0.5;
             }
@@ -32,8 +37,7 @@ module objects
             this.y = y;
         }
 
-        public setText(newText:string)
-        {
+        public setText(newText: string) {
             this.text = newText;
             this.regX = this.getBounds().width * 0.5;
             this.regY = this.getMeasuredHeight() * 0.5;

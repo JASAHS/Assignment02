@@ -1,4 +1,13 @@
 "use strict";
+/*
+File Name: Vec2.ts
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
 var calculate;
 (function (calculate) {
     class Vec2 extends createjs.Point {

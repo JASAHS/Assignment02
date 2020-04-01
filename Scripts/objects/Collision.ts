@@ -1,40 +1,40 @@
-module objects
-{
-    export class Collision
-    {
-        
-        public static squaredRadiusCheck(object1:objects.GameObject, object2:objects.GameObject)
-        {
+/*  
+File Name: Collision.ts 
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
+module objects {
+    export class Collision {
+
+        public static squaredRadiusCheck(object1: objects.GameObject, object2: objects.GameObject) {
             let sqrDistance = objects.Vector2.sqrDistance(object1.position, object2.position);
             let radii = object1.halfWidth + object2.halfWidth
-    
-            if(sqrDistance < (radii * radii))
-            {
-                if(!object2.isColliding)
-                {
+
+            if (sqrDistance < (radii * radii)) {
+                if (!object2.isColliding) {
                     console.log("Collision!");
                     object2.isColliding = true;
                 }
             }
-            else
-            {
+            else {
                 object2.isColliding = false;
             }
         }
 
-        public static AABBCheck(object1:objects.GameObject, object2:objects.GameObject)
-        {
+        public static AABBCheck(object1: objects.GameObject, object2: objects.GameObject) {
             let object1Offset = new objects.Vector2(0, 0);
             let object2Offset = new objects.Vector2(0, 0);
 
-            if(object1.isCentered)
-            {
+            if (object1.isCentered) {
                 object1Offset.x = object1.halfWidth;
                 object1Offset.y = object1.halfHeight;
             }
 
-            if(object2.isCentered)
-            {
+            if (object2.isCentered) {
                 object2Offset.x = object2.halfWidth;
                 object2Offset.y = object2.halfHeight;
             }
@@ -42,23 +42,20 @@ module objects
             let object1TopLeft = objects.Vector2.subtract(object1.position, object1Offset);
             let object2TopLeft = objects.Vector2.subtract(object2.position, object2Offset);
 
-            if(object1TopLeft.x < object2TopLeft.x + object2.width &&
+            if (object1TopLeft.x < object2TopLeft.x + object2.width &&
                 object1TopLeft.x + object1.width > object2TopLeft.x &&
                 object1TopLeft.y < object2TopLeft.y + object2.height &&
-                object1TopLeft.y + object1.height > object2TopLeft.y)
-            {
-                if(!object2.isColliding)
-                {
+                object1TopLeft.y + object1.height > object2TopLeft.y) {
+                if (!object2.isColliding) {
                     console.log("Collision!");
                     object2.isColliding = true;
                 }
             }
-            else
-            {
+            else {
                 object2.isColliding = false;
             }
         }
 
-       
+
     }
 }

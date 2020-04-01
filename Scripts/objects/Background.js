@@ -1,4 +1,13 @@
 "use strict";
+/*
+File Name: Background.ts
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
 var objects;
 (function (objects) {
     class Background extends objects.GameObject {
@@ -6,7 +15,6 @@ var objects;
         //constructor
         constructor(imagePath = config.Game.ASSETS.getResult("placeholder")) {
             super(imagePath);
-            //super(config.Game.ASSETS.getResult("background"));
             this.Start();
         }
         //provate method

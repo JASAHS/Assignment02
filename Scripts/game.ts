@@ -1,5 +1,12 @@
-//IIFE -- Immediately Invoked Function Expression
-// mean? is an anonymous self-executing function
+/*  
+File Name: game.ts scripts
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
 let game1 = (function () {
     let canvas: HTMLCanvasElement = document.getElementsByTagName('canvas')[0];
     let stage: createjs.Stage;

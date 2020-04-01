@@ -1,12 +1,18 @@
-module objects 
-{
-    export class Button extends GameObject
-    {
+/*  
+File Name: Button.ts 
+Authors Name: Jasah Shamsudheen
+Student Number:300981749
+Last Modified By: Jasah Shamsudheen
+Date Last Modified: 2020 - 04 - 01
+Program Description: Simple 2D Scrolling Game - Space Shooter
+Revision History: 1.0
+*/
+module objects {
+    export class Button extends GameObject {
         // constructor
         constructor(
-            imagePath:Object = config.Game.ASSETS.getResult("placeholder"), 
-            x:number = 0, y:number = 0, isCentered:boolean = true)
-        {
+            imagePath: Object = config.Game.ASSETS.getResult("placeholder"),
+            x: number = 0, y: number = 0, isCentered: boolean = true) {
             super(imagePath, x, y, isCentered);
 
             this.on("mouseover", this.HoverOver);
@@ -16,20 +22,17 @@ module objects
         }
 
         // PRIVATE LIFE CYCLE METHODS
-        protected _checkBounds():void
-        {
+        protected _checkBounds(): void {
 
         }
 
 
         // PUBLIC Methods
-        HoverOver():void
-        {
+        HoverOver(): void {
             this.alpha = 0.7;
         }
 
-        HoverOut():void
-        {
+        HoverOut(): void {
             this.alpha = 1.0;
         }
 
@@ -40,18 +43,15 @@ module objects
          *
          * @memberof Button
          */
-        public Start():void
-        {
+        public Start(): void {
 
         }
 
-        public Update():void
-        {
+        public Update(): void {
 
         }
 
-        public Reset():void
-        {
+        public Reset(): void {
 
         }
 
