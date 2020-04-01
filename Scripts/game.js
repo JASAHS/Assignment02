@@ -20,7 +20,7 @@ let game1 = (function () {
         { id: "bullet", src: "./Assets/images/bulleticon.png" },
         { id: "score", src: "./Assets/images/score.png" },
         { id: "life", src: "./Assets/images/lives.png" },
-        { id: "healthup", src: "./Assets/images/healthup.png" },
+        { id: "lifeup", src: "./Assets/images/lifeup.png" },
         { id: "bomb", src: "./Assets/images/bomb.png" },
         { id: "points", src: "./Assets/images/points.png" },
         { id: "startScreen", src: "./Assets/images/startScreen.png" },

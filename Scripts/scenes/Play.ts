@@ -17,6 +17,7 @@ module scenes {
         private _lifeImage: objects.Button;
         private _scoreImage: objects.Button;
         private _pointsUp: objects.Image;
+        private _lifeUp: objects.Image;
         private _playerBullet: objects.Bullet;
         private _bulletImg = new Image();
         private _eexplosion: objects.Image;
@@ -43,6 +44,7 @@ module scenes {
             this._eexplosion = new objects.Image();
             this._player = new objects.Player();
             this._pointsUp = new objects.Image();
+            this._lifeUp = new objects.Image();
             this._playerBullet = new objects.Bullet();
             this._bulletImg.src = "./Assets/images/bulleticon.png"
             this._bomb = new objects.Imagess();
@@ -76,6 +78,7 @@ module scenes {
             this.Main();
         }
 
+        //updates the scene
         public Update(): void {
             this._background.Update();
             this._player.Update();
@@ -106,6 +109,19 @@ module scenes {
                     this._pointsUp.setStatus(false);
                 }
             }
+
+            //checking whether extra life is colliding with the player
+            if (this._lifeUp.getStatus()) {
+                this._lifeUp.Update()
+                managers.Collision.AABBCheck(this._player, this._lifeUp);
+                if (this._lifeUp.isColliding) {
+                    createjs.Sound.play("./Assets/audio/points.wav");
+                    config.Game.SCORE_BOARD.Lives += 1;
+                    console.log("Collided Mister Life")
+                    this.removeChild(this._lifeUp);
+                    this._lifeUp.setStatus(false);
+                }
+            }
         }
 
         public Main(): void {
@@ -122,6 +138,7 @@ module scenes {
             this.addChild(this._scoreBoard.ScoreLabel);
         }
 
+        //display player status and check whether player is won or not
         public WinOrLoseUpdate() {
             this._bulletNumLabel.text = " : " + this._bulletNum;
             if (this._bulletNum == 0) {
@@ -131,8 +148,7 @@ module scenes {
             if (managers.Collision.count >= this._enemyNumber || this._enemyNumber == 0) {
                 if (this._boss.isActive) {
                     this.addChild(this._boss);
-                    console.log("my nigga");
-                    // config.Game.SCENE_STATE = scenes.State.END;
+                    console.log("My Boss");
                     this._boss.isActive = false;
                 }
 
@@ -172,10 +188,10 @@ module scenes {
                         }
                     }
                 });
-                // managers.Collision.count = 0;
+
             }
 
-            //if attacked more than 3 times, game over
+            //if attacked 3 times, GAME OVER
             if (config.Game.SCORE_BOARD.Lives <= 0) {
                 setTimeout(() => {
                     this.removeChild(this._player);
@@ -184,6 +200,7 @@ module scenes {
             }
         }
 
+        //updates the postion of enemies and checks whether the bullets are collidng with each other between enemies and the player
         public UpdatePosition() {
             this._enemies.forEach(enemy => {
                 this.addChild(enemy);
@@ -223,12 +240,19 @@ module scenes {
                         setTimeout(() => {
                             this.removeChild(this._eexplosion);
                         }, 200);
+
                         let randNum = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
                         console.log(randNum)
                         if (randNum == 1) {
                             this._pointsUp = new objects.Image(config.Game.ASSETS.getResult("points"), enemy.x, enemy.y + 20, true);
                             this.addChild(this._pointsUp);
                             this._pointsUp.setStatus(true);
+                        }
+
+                        if (randNum == 2) {
+                            this._lifeUp = new objects.Image(config.Game.ASSETS.getResult("lifeup"), enemy.x, enemy.y + 20, true);
+                            this.addChild(this._lifeUp);
+                            this._lifeUp.setStatus(true);
                         }
 
                         enemy.position = new objects.Vector2(-100, -200);
@@ -242,7 +266,7 @@ module scenes {
 
             });
         }
-
+        //create the required number of enemies
         public CreateEnemies(number: Number): void {
             let createEnemy = setInterval(() => {
                 if (this._enemies.length < number) {
@@ -258,8 +282,9 @@ module scenes {
             }, 1000)
         }
 
+        //updates the bullet speed of both enemy and player
         public BulletVelocity(eBullet: objects.Bullet, eSpeed: number, eMove: number, type: boolean = false): void {
-            //enemy direction
+            //Direction of Enemy Bullet
             if (type == true) {
                 eBullet.y += eSpeed;
                 eBullet.position.y += eMove;
@@ -267,7 +292,7 @@ module scenes {
                     this.removeChild(eBullet);
                 }
             }
-            //player direction
+            //Direction of Player Bullet
             else {
                 eBullet.y -= eSpeed;
                 eBullet.position.y -= eMove;
@@ -276,7 +301,7 @@ module scenes {
                 }
             }
         }
-        // Shoot enemies are colliding
+        // Arranges the Bullet of the Enemies
         public ShootPlayer(enemy: objects.Enemy, bullArray: Array<objects.Bullet>): void {
             if (enemy.canShoot()) {
                 let fire = setInterval(() => {
@@ -289,8 +314,9 @@ module scenes {
                 }, 500)
             }
 
-        }//end public FireGun
+        }
 
+        //updates the postion of the bullet
         public UpdateBullets() {
             this._playerbullets.forEach((bullet) => {
                 this.BulletVelocity(bullet, 8, 8, false);
@@ -310,6 +336,7 @@ module scenes {
 
         }
 
+        //check whether enemy is firing using keyboard input
         public UpdatePlayerFire() {
             if (config.Game.keyboardManager.fire) {
                 if (this.fire) {

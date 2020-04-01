@@ -28,6 +28,7 @@ var scenes;
             this._eexplosion = new objects.Image();
             this._player = new objects.Player();
             this._pointsUp = new objects.Image();
+            this._lifeUp = new objects.Image();
             this._playerBullet = new objects.Bullet();
             this._bulletImg.src = "./Assets/images/bulleticon.png";
             this._bomb = new objects.Imagess();
@@ -57,6 +58,7 @@ var scenes;
             this._scoreBoard.HighScore = config.Game.HIGH_SCORE;
             this.Main();
         }
+        //updates the scene
         Update() {
             this._background.Update();
             this._player.Update();
@@ -85,6 +87,18 @@ var scenes;
                     this._pointsUp.setStatus(false);
                 }
             }
+            //checking whether extra life is colliding with the player
+            if (this._lifeUp.getStatus()) {
+                this._lifeUp.Update();
+                managers.Collision.AABBCheck(this._player, this._lifeUp);
+                if (this._lifeUp.isColliding) {
+                    createjs.Sound.play("./Assets/audio/points.wav");
+                    config.Game.SCORE_BOARD.Lives += 1;
+                    console.log("Collided Mister Life");
+                    this.removeChild(this._lifeUp);
+                    this._lifeUp.setStatus(false);
+                }
+            }
         }
         Main() {
             // adds background
@@ -98,6 +112,7 @@ var scenes;
             this.addChild(this._scoreBoard.LivesLabel);
             this.addChild(this._scoreBoard.ScoreLabel);
         }
+        //display player status and check whether player is won or not
         WinOrLoseUpdate() {
             this._bulletNumLabel.text = " : " + this._bulletNum;
             if (this._bulletNum == 0) {
@@ -106,8 +121,7 @@ var scenes;
             if (managers.Collision.count >= this._enemyNumber || this._enemyNumber == 0) {
                 if (this._boss.isActive) {
                     this.addChild(this._boss);
-                    console.log("my nigga");
-                    // config.Game.SCENE_STATE = scenes.State.END;
+                    console.log("My Boss");
                     this._boss.isActive = false;
                 }
                 this._boss.Update();
@@ -143,9 +157,8 @@ var scenes;
                         }
                     }
                 });
-                // managers.Collision.count = 0;
             }
-            //if attacked more than 3 times, game over
+            //if attacked 3 times, GAME OVER
             if (config.Game.SCORE_BOARD.Lives <= 0) {
                 setTimeout(() => {
                     this.removeChild(this._player);
@@ -153,6 +166,7 @@ var scenes;
                 }, 200);
             }
         }
+        //updates the postion of enemies and checks whether the bullets are collidng with each other between enemies and the player
         UpdatePosition() {
             this._enemies.forEach(enemy => {
                 this.addChild(enemy);
@@ -194,6 +208,11 @@ var scenes;
                             this.addChild(this._pointsUp);
                             this._pointsUp.setStatus(true);
                         }
+                        if (randNum == 2) {
+                            this._lifeUp = new objects.Image(config.Game.ASSETS.getResult("lifeup"), enemy.x, enemy.y + 20, true);
+                            this.addChild(this._lifeUp);
+                            this._lifeUp.setStatus(true);
+                        }
                         enemy.position = new objects.Vector2(-100, -200);
                         enemy.died = true;
                         this.removeChild(enemy);
@@ -203,6 +222,7 @@ var scenes;
                 });
             });
         }
+        //create the required number of enemies
         CreateEnemies(number) {
             let createEnemy = setInterval(() => {
                 if (this._enemies.length < number) {
@@ -217,8 +237,9 @@ var scenes;
                 }
             }, 1000);
         }
+        //updates the bullet speed of both enemy and player
         BulletVelocity(eBullet, eSpeed, eMove, type = false) {
-            //enemy direction
+            //Direction of Enemy Bullet
             if (type == true) {
                 eBullet.y += eSpeed;
                 eBullet.position.y += eMove;
@@ -226,7 +247,7 @@ var scenes;
                     this.removeChild(eBullet);
                 }
             }
-            //player direction
+            //Direction of Player Bullet
             else {
                 eBullet.y -= eSpeed;
                 eBullet.position.y -= eMove;
@@ -235,7 +256,7 @@ var scenes;
                 }
             }
         }
-        // Shoot enemies are colliding
+        // Arranges the Bullet of the Enemies
         ShootPlayer(enemy, bullArray) {
             if (enemy.canShoot()) {
                 let fire = setInterval(() => {
@@ -248,7 +269,8 @@ var scenes;
                         clearInterval(fire);
                 }, 500);
             }
-        } //end public FireGun
+        }
+        //updates the postion of the bullet
         UpdateBullets() {
             this._playerbullets.forEach((bullet) => {
                 this.BulletVelocity(bullet, 8, 8, false);
@@ -266,6 +288,7 @@ var scenes;
                 this.BulletVelocity(bullet, 8, 8, true);
             });
         }
+        //check whether enemy is firing using keyboard input
         UpdatePlayerFire() {
             if (config.Game.keyboardManager.fire) {
                 if (this.fire) {
