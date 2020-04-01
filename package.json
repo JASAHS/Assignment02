@@ -1,0 +1,21 @@
+{
+  "name": "jasah-shamsudheen-assignment-02",
+  "version": "1.0.0",
+  "description": "Assignment 02 - Space Shooter",
+  "main": "game.js",
+  "author": "Jasah Shamsudheen",
+  "license": "MIT",
+  "dependencies": {
+    "createjs": "^1.0.1",
+    "easeljs": "^1.0.2",
+    "preloadjs": "^1.0.1",
+    "soundjs": "^1.0.1",
+    "tweenjs": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/easeljs": "^1.0.0",
+    "@types/preloadjs": "^0.6.32",
+    "@types/soundjs": "^0.6.27",
+    "@types/tweenjs": "^1.0.0"
+  }
+}
